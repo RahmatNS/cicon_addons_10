@@ -18,6 +18,7 @@ class ReportPartsbyProductTypeSummary(models.AbstractModel): # Report File Name
             'doc_model': report.model,
             'docs': _docs,
             'heading': self._context.get('heading'),
+            'subheading': self._context.get('subheading'),
 			'rpt_option': self._context.get('report_option'),	
             'get_total': self._get_parts_total,
             'get_category': self._get_categories,
@@ -38,6 +39,8 @@ class ReportPartsbyProductTypeSummary(models.AbstractModel): # Report File Name
         _qry = [('invoice_date', '>=', _start_date), ('invoice_date', '<=', _end_date)]
         if self._context.get('company_id'):
             _qry.append(('company_id', '=', self._context.get('company_id')))
+        if self._context.get('machine_id'):
+            _qry.append(('machine_id', '=', self._context.get('machine_id')))
         self._inv_lines = self.env['cmms.store.invoice.line'].search(_qry)
         _partTypes = self._inv_lines.mapped('spare_part_type_id')
         return _partTypes

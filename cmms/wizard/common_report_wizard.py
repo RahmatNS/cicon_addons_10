@@ -65,6 +65,7 @@ class CmmsCommonReportWizard(models.TransientModel):
                                          string="Machine Category")
     machine_type_ids = fields.Many2many('cmms.machine.type', 'cmmms_report_machine_type_sel_rel', 'wizard_id', 'type_id',
                                         string="Machine Type")
+    machine_id = fields.Many2one('cmms.machine', string="Machine")
     report_option = fields.Selection([('summary', 'Summary'), ('detail', 'Detailed')], string='Report Option',default='summary')
 
     #find the end date of the select month in report
@@ -268,10 +269,13 @@ class CmmsCommonReportWizard(models.TransientModel):
         if self.report_list == 'parts_by_producttype_report':
             ctx['report_option'] = self.report_option
             ctx['company_id'] = self.company_id.id
+            ctx['machine_id'] = self.machine_id.id
             if self.report_option == 'summary':
                 ctx['heading'] = "Spare Parts Summary by Product Type" + "(" + start_date + ' to ' + end_date + ' )'
             elif self.report_option == 'detail':
                 ctx['heading'] = "Spare Parts Details by Product Type" + "(" + start_date + ' to ' + end_date + ' )'
+            if self.machine_id:
+                ctx['subheading'] = "[ " + self.machine_id.code + " ] " + self.machine_id.name + " ( " + self.machine_id.type_id.name + " )"
             return self.with_context(ctx).env['report'].get_action(self,
                                                                    report_name='cmms.report_partsby_producttype_summary_template',
                                                                    data=datas)
