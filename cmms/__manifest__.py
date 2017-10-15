@@ -50,6 +50,7 @@ Required modules:
         'wizard/pm_task_sch_report_wizard_view.xml',
         'wizard/spare_part_type_wizard_view.xml',
         'wizard/common_report_wizard_view.xml',
+        'wizard/job_order_status_wizard_view.xml',
         'views/report_machine_preventive_status.xml',
         'views/report_machine_transfer_form.xml',
         # 'wizard/consume_product_wizard_view.xml',

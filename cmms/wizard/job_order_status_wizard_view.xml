@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="cmms_job_order_status_wizard" model="ir.ui.view">
+            <field name="name">cmms.job.order.status.form</field>
+             <field name="model">cmms.job.order.status.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Job Order Status">
+                    <div>
+                        Only Applicable for Preventive Job order !
+                    </div>
+                    <group >
+                        <field name="status_id" options="{'no_open':True,'no_create':True}"/>
+                     </group>
+                    <footer>
+                        <button name="change_status" confirm="Status will be Changed for all select Job orders, continue ?" string="Update" type="object"  class="oe_highlight"/>
+                        or
+                        <button string="Cancel" special="cancel" class="oe_link"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+       <act_window id="cmms_job_order_status_wizard_action"
+            multi="True"
+            key2="client_action_multi" name="Job Order Status"
+            res_model="cmms.job.order.status.wizard" src_model="cmms.job.order"
+            view_mode="form"
+            view_type="form"
+            target="new"
+            context="{'job_order_ids' : active_ids}"
+        />
+
+
+    </data>
+
+
+</odoo>
