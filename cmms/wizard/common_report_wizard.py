@@ -14,6 +14,17 @@ JOB_ORDER_TYPE = [('breakdown', 'BREAKDOWN'), ('general', 'GENERAL'),('preventiv
 class CmmsCommonReportWizard(models.TransientModel):
     _name = 'cmms.common.report.wizard'
     _description = "CMMS Reports"
+    _rec_name = 'report_list'
+
+
+    @api.one
+    def _get_attachment(self):
+        _attach = self.env['ir.attachment'].search([('res_model', '=', 'cmms.common.report.wizard'), ('res_id','=', self.id)])
+        if _attach:
+            self.attachment = _attach.datas
+            self.attachment_name = _attach.datas_fname
+
+
 
     @api.onchange('report_by')
     def _get_date(self):
@@ -67,6 +78,8 @@ class CmmsCommonReportWizard(models.TransientModel):
                                         string="Machine Type")
     machine_id = fields.Many2one('cmms.machine', string="Machine")
     report_option = fields.Selection([('summary', 'Summary'), ('detail', 'Detailed')], string='Report Option',default='summary')
+    attachment = fields.Binary( compute=_get_attachment, string="Attachment")
+    attachment_name = fields.Char(compute=_get_attachment, string="Attachment Name")
 
     #find the end date of the select month in report
 
@@ -186,7 +199,7 @@ class CmmsCommonReportWizard(models.TransientModel):
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         format1 = workbook.add_format()
         format1.set_num_format('###0.00')
-        worksheet = workbook.add_worksheet()
+        worksheet = workbook.add_worksheet("cmms")
         row = 0
         col = 3
         worksheet.write(row, 0, 'Sn#')
@@ -285,7 +298,9 @@ class CmmsCommonReportWizard(models.TransientModel):
             ctx['machine_type_ids'] = self.machine_type_ids._ids
             return self.with_context(ctx).env['report'].get_action(self,
                                                                    report_name='cmms.report_machine_analysis_summary_template',
-                                                                   data=datas)
+                                                                       data=datas)
+
+
         if self.report_list == 'machine_status_report':
             if self.company_id:
                 _qry = [('company_id', '=', self.company_id.id),('is_machinery','=', 'True')]

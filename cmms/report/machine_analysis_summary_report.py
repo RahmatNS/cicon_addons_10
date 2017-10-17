@@ -1,6 +1,9 @@
 from odoo import fields,models,api
-from dateutil import rrule
-from datetime import date
+import xlsxwriter
+import cStringIO
+import base64
+from datetime import datetime,date,timedelta
+
 
 _machines = None
 _inv_lines = None
@@ -26,7 +29,61 @@ class ReportMachineAnalysisSummary(models.AbstractModel): # Report File Name
             'get_machine': self._get_machines,
             'get_breakdown_count': self._job_order_count
         }
+        self._create_xls()
         return report_obj.render('cmms.report_machine_analysis_summary_template', docargs)
+
+    def _create_xls(self):
+
+        _calender = ['January', 'February', 'March', 'April' , 'May' ,'June' ,'July', 'August', 'September', 'October', 'November', 'December']
+
+        output = cStringIO.StringIO()
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        format1 = workbook.add_format()
+        format1.set_num_format('###0.00')
+        worksheet = workbook.add_worksheet("Machine")
+        row = 0
+        col = 5
+        worksheet.write(row, 0, 'Sn#')
+        worksheet.write(row, 1, 'TYPE')
+        worksheet.write(row, 2, 'CATEGORY')
+        worksheet.write(row, 3, 'CODE')
+        worksheet.write(row, 4, 'NAME')
+        worksheet.write(row, 5, 'DESCRIPTION')
+        for _mn in _calender:
+            col += 1
+            worksheet.write(row, col, _mn)
+        worksheet.write(row, 18, 'TOTAL')
+        for _mType in self._get_report_data(None):
+            for _mCateg in self._get_categories(_mType):
+                for _macs in self._get_machines(_mType , _mCateg):
+                    _mac = _macs.get('machine_id')
+                    row += 1
+                    col = 5
+                    worksheet.write(row, 0, row)
+                    worksheet.write(row, 1, _mac.type_id.name)
+                    worksheet.write(row, 2, _mac.category_id.name)
+                    worksheet.write(row, 3, _mac.code)
+                    worksheet.write(row, 4, _mac.name)
+                    worksheet.write(row, 5, 'EXPENSE')
+                    for _mn in _calender:
+                        col += 1
+                        worksheet.write(row, col, _macs.get(_mn))
+                    worksheet.write_formula(row, 18, '=SUM(G' + str(row) + ':' + 'R' + str(row) + ')')
+        workbook.close()
+        output.seek(0)
+        _r_name = 'Machine Analysis -' + datetime.today().strftime('%d-%b-%Y')
+        _file_name = 'machine_analysis_' + datetime.today().strftime('%d-%b-%Y') + '.xlsx'
+        vals = {
+            'name': _r_name,
+            'datas_fname': _file_name,
+            'description': 'Machine Analysis',
+            'type': 'binary',
+            'db_datas': base64.encodestring(output.read()),
+            'res_name': "Machine Analysis",
+            'res_model': 'cmms.common.report.wizard',
+            'res_id': self._context.get('active_id')
+        }
+        file_id = self.env['ir.attachment'].create(vals)
 
     def _get_report_data(self,data):
         _qry =[]
@@ -37,7 +94,7 @@ class ReportMachineAnalysisSummary(models.AbstractModel): # Report File Name
         if self._context.get('machine_type_ids'):
             _qry.append(('type_id', 'in', self._context.get('machine_type_ids')))
         self._machines = self.env['cmms.machine'].search(_qry)
-        _types = self._machines.mapped('type_id').sorted(lambda t:t.name)
+        _types = self._machines.mapped('type_id').sorted(lambda t: t.name)
         return _types
 
     def _job_order_count(self, _mid):
