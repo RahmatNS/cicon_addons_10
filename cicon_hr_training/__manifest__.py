@@ -13,6 +13,7 @@
         'views/cicon_hr_training_sequence.xml',
         'views/cicon_emp_record_training.xml',
         'views/cicon_hr_training_report.xml',
+        'views/cicon_emp_card_report.xml'
 
     ],
     "description": "CICON HR Training & Warning",

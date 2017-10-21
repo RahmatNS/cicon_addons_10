@@ -87,8 +87,10 @@
                         <field name="name"/>
                         <field name="description" />
                         <field name="department_id"/>
+                        <field name="agent_id"/>
                         <field name="coordinator_id"/>
                         <field name="score"/>
+
                     </group>
                     </sheet>
                 </form>

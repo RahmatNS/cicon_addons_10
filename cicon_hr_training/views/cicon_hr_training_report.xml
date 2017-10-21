@@ -10,6 +10,15 @@
             name="cicon_hr_training.hr_emp_training_record_report_template"
         />
 
+       <report
+            id="report_cicon_employee_training_card"
+            string="Employee Training Card"
+            model="cicon.hr.employee.training"
+            report_type="qweb-pdf"
+            file="cicon_hr_training.cicon_emp_card_report"
+            name="cicon_hr_training.hr_emp_training_card_report_template"
+        />
+
 
 
   </data>

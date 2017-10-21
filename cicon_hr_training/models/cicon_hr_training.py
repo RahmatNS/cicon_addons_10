@@ -9,6 +9,7 @@ class cicon_hr_training_title(models.Model):
     name = fields.Char('Training Title', required=True)
     description = fields.Text('Description')
     department_id = fields.Many2one('hr.department', string="Trained By Department")
+    agent_id = fields.Many2one('res.partner', string="Trained By Agent", domain="[('supplier','=',True)]")
     coordinator_id = fields.Many2one('hr.employee',  string='Coordinator')
     score = fields.Integer('Score')
 
