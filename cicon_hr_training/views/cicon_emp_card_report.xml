@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       <template id="hr_emp_training_card_report_template">
+        <t t-call="report.html_container">
+            <div class="page">
+                <style type="text/css">
+                            <!--.table-bordered{-->
+                              <!--font-size: 9px;-->
+                            <!--}-->
+                </style>
+                <div class="row">
+                    <t t-foreach="docs" t-as="o">
+                        <div class="mt16 col-xs-6">
+                            <div class="row ml4" style="border:1px solid black;">
+                            <div class="row" >
+                                    <div class="col-xs-6" style="min-height:45px; vertical-align: middle ">
+                                        <img t-if="o.title_id.agent_id.image" t-att-src="'data:image/png;base64,%s' % o.title_id.agent_id.image" style="max-height: 35px;"/>
+                                    </div>
+                                    <div class="text-right col-xs-6" style="min-height:45px; vertical-align: middle">
+                                        <img t-if="o.employee_id.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.employee_id.company_id.logo" style="max-height: 35px;"/>
+                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table class="table table-bordered">
+                                      <tr>
+                                          <th style="width:75%" class="text-uppercase">NAME : <span t-field="o.employee_id.name"/>  </th>
+                                          <td style="width:25%" class="text-center" rowspan="4">
+                                              <img t-if="o.employee_id.image" t-att-src="'data:image/png;base64,%s' % o.employee_id.image" style="max-width: 100px ; max-height: 130px; height:130px"/>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <th style="width:75%">EMP NO : <span t-field="o.employee_id.cicon_employee_id" t-field-options='{"widget": "char"}'/>  </th>
+                                      </tr>
+                                      <tr>
+                                          <th style="width:75%" class="text-uppercase">JOB TITLE: <span t-field="o.employee_id.job_id.name"/> </th>
+                                      </tr>
+                                      <tr>
+                                          <th style="width:75%">TRAINING DATE: <span t-field="o.training_date" t-field-options="{'format':'dd MMM yyyy'}" /> </th>
+                                      </tr>
+                                  </table>
+                                </div>
+                            </div>
+                            <div class="mt16 row ">
+                                    <div class="col-xs-6" >
+                                        <small>  AUTHORIZED SIGNATURE </small>
+                                    </div>
+                                    <div class="col-xs-6 text-right">
+                                        <small>  DOC REF: RCC-0221-E(Issue 01) </small>
+                                    </div>
+                            </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+        </template>
+    </data>
+</odoo>
