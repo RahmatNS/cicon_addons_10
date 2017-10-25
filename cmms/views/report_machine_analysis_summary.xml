@@ -5,6 +5,10 @@
      <t t-call="report.html_container">
          <t t-call="cmms.cmms_internal_layout">
             <div class="page">
+                 <style type="text/css">
+                    .small {font-size:11px}
+
+                 </style>
                  <div class="row">
                      <div class="col-xs-12 text-center"><h3>Machine Analysis Report</h3></div>
                  </div>
@@ -35,50 +39,45 @@
                             </tr>
                             <t t-set="categs" t-value="get_category(o)"/>
                             <t t-foreach="categs" t-as="c">
-                                    <tr><th colspan="16" class="text-left"><span t-field="c.name"/></th></tr>
+                                    <tr>
+                                        <th colspan="16" class="text-left"><span t-field="c.name"/></th>
+                                    </tr>
                                     <t t-set="macs" t-value="get_machine(o,c)" />
+                                    <t t-set="months" t-value="get_months"/>
                                     <t t-foreach="macs" t-as="m">
-                                            <tr  style="page-break-inside:avoid !important">
-                                                <t t-set="m_val" t-value="m.get('machine_id')"/>
-                                                <td style="width:7%" rowspan="2"> <span t-esc="m_val.code"/></td>
-                                                <td style="width:18%" rowspan="2">  <span t-esc="m_val.name"/></td>
+                                        <t t-set="m_val" t-value="m.get('machine_id')"/>
+                                        <t t-set="job_order_info" t-value="get_breakdown_count(m_val.id)" />
+                                        <t  t-set="b" t-value="job_order_info.get('breakdown_count')" />
+                                        <t  t-set="i" t-value="job_order_info.get('idle_time')" />
+                                            <tr style="page-break-inside:avoid !important">
+                                                <td style="width:7%" rowspan="3"> <span t-esc="m_val.code"/></td>
+                                                <td style="width:18%" rowspan="3">  <span t-esc="m_val.name"/></td>
                                                 <td style="width:5%">Breakdown</td>
-                                                <t t-set="breakdowns" t-value="get_breakdown_count(m_val.id)" />
-                                                    <t t-foreach="breakdowns" t-as="b">
-                                                        <td style="width:5%" class="text-right"><span t-esc="b.get('January')" /></td>
-                                                        <td style="width:5%" class="text-right"><span t-esc="b.get('February')" /></td>
-                                                        <td style="width:5%" class="text-right"><span t-esc="b.get('March')" /></td>
-                                                        <td style="width:5%" class="text-right"><span t-esc="b.get('April')" /></td>
-                                                        <td style="width:5%" class="text-right"><span t-esc="b.get('May')" /></td>
-                                                        <td style="width:5%" class="text-right"><span t-esc="b.get('June')" /></td>
-                                                        <td style="width:5%" class="text-right"><span t-esc="b.get('July')" /></td>
-                                                        <td style="width:5%" class="text-right"><span t-esc="b.get('August')" /></td>
-                                                        <td style="width:5%" class="text-right"><span t-esc="b.get('September')" /></td>
-                                                        <td style="width:5%" class="text-right"><span t-esc="b.get('October')" /></td>
-                                                        <td style="width:5%" class="text-right"><span t-esc="b.get('November')" /></td>
-                                                        <td style="width:5%" class="text-right"><span t-esc="b.get('December')" /></td>
-                                                        <td style="width:8%" class="text-right"><span t-esc="b.get('total_job_order')"/> </td>
-                                                    </t>
+                                                <td style="width:5%" class="text-center" t-foreach="months" t-as="month">
+                                                    <small t-esc="b.get(month)" />
+                                                </td>
+                                                 <td style="width:8%" class="text-right"><span t-esc="b.get('total_job_order')"/> </td>
                                             </tr>
                                             <tr style="page-break-inside:avoid !important">
-
-                                                <td style="width:5%" class="text-right">Expense</td>
-                                                <td  style="width:5%" class="text-right"><span t-esc="m.get('January')" /></td>
-                                                <td  style="width:5%" class="text-right"><span t-esc="m.get('February')" /></td>
-                                                <td  style="width:5%" class="text-right"><span t-esc="m.get('March')" /></td>
-                                                <td  style="width:5%"  class="text-right"><span t-esc="m.get('April')" /></td>
-                                                <td  style="width:5%"  class="text-right" ><span t-esc="m.get('May')" /></td>
-                                                <td   style="width:5%" class="text-right"><span t-esc="m.get('June')" /></td>
-                                                <td  style="width:5%"  class="text-right"><span t-esc="m.get('July')" /></td>
-                                                <td  style="width:5%"  class="text-right"><span t-esc="m.get('August')" /></td>
-                                                <td  style="width:5%"  class="text-right"><span t-esc="m.get('September')" /></td>
-                                                <td  style="width:5%"  class="text-right"><span t-esc="m.get('October')" /></td>
-                                                <td  style="width:5%"  class="text-right"><span t-esc="m.get('November')" /></td>
-                                                <td  style="width:5%"  class="text-right"><span t-esc="m.get('December')" /></td>
+                                                <td style="width:5%" class="text-left">Expense</td>
+                                                 <td style="width:5%" class="text-right" t-foreach="months" t-as="month">
+                                                     <span t-esc="m.get(month)" />
+                                                 </td>
                                                 <td  style="width:8%"  class="text-right"><strong t-esc="m.get('total_expense')"/> </td>
-
                                             </tr>
-
+                                            <tr style="page-break-inside:avoid !important">
+                                                <td style="width:5%" class="text-left">Idle Time</td>
+                                                 <td style="width:5%" class="text-center small" t-foreach="months" t-as="month">
+                                                     <t t-set="i_val" t-value="i.get(month)"/>
+                                                     <t t-if="i_val">
+                                                     <t t-if="i_val[0] > 0">
+                                                        <span t-esc="i_val[0]" />(d)
+                                                     </t>
+                                                        <span t-esc="i_val[1]" />
+                                                     </t>
+                                                 </td>
+                                                <td  style="width:8%"  class="text-right">  </td>
+                                            </tr>
                                     </t>
                              </t>
 

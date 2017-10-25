@@ -19,12 +19,10 @@ class CmmsCommonReportWizard(models.TransientModel):
 
     @api.one
     def _get_attachment(self):
-        _attach = self.env['ir.attachment'].search([('res_model', '=', 'cmms.common.report.wizard'), ('res_id','=', self.id)])
+        _attach = self.env['ir.attachment'].search([('res_model', '=', 'cmms.common.report.wizard'), ('res_id','=', self.id)], order='id desc', limit=1)
         if _attach:
             self.attachment = _attach.datas
             self.attachment_name = _attach.datas_fname
-
-
 
     @api.onchange('report_by')
     def _get_date(self):
@@ -299,7 +297,6 @@ class CmmsCommonReportWizard(models.TransientModel):
             return self.with_context(ctx).env['report'].get_action(self,
                                                                    report_name='cmms.report_machine_analysis_summary_template',
                                                                        data=datas)
-
 
         if self.report_list == 'machine_status_report':
             if self.company_id:
