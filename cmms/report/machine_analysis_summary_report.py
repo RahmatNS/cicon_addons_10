@@ -96,10 +96,13 @@ class ReportMachineAnalysisSummary(models.AbstractModel): # Report File Name
         return _types
 
     def _get_time_diff_min(self, _startTime, _endTime):
-        _start = fields.Datetime.from_string(_startTime)
-        _end = fields.Datetime.from_string(_endTime)
-        _diff = _end - _start
-        return (_diff.days, (_diff.seconds / 60))
+        if _startTime and _endTime:
+            _start = fields.Datetime.from_string(_startTime)
+            _end = fields.Datetime.from_string(_endTime)
+            _diff = _end - _start
+            return (_diff.days, (_diff.seconds / 60))
+        else:
+            return (0 , 0)
 
     def _job_order_count(self, _mid):
         year = self._context.get('year')
@@ -118,10 +121,10 @@ class ReportMachineAnalysisSummary(models.AbstractModel): # Report File Name
              ('job_order_type', 'in', ('breakdown', 'preventive'))])
 
         for r in _res:
+            _idle_mins = []
             _breakdown_entry[r['job_order_date:month'].replace(year,'').strip()] = r['job_order_date_count']
             _job_orders_on_month = _job_orders.filtered(lambda a: fields.Date.from_string(a.job_order_date).strftime('%B %Y') == r['job_order_date:month'])
             for _job in _job_orders_on_month:
-                _idle_mins = []
                 if _job.job_order_type == 'breakdown':
                     _idle_mins.append(self._get_time_diff_min(_job.breakdown_datetime, _job.work_end_datetime))
                 elif _job.job_order_type == 'preventive':
