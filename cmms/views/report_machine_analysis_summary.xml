@@ -12,36 +12,39 @@
                  <div class="row">
                      <div class="col-xs-12 text-center"><h3>Machine Analysis Report</h3></div>
                  </div>
+
+                <t t-foreach="docs" t-as="o">
                  <table  class="table table-bordered">
                      <caption class="text-center">Year:<span t-esc="year"/></caption>
-                    <thead>
+                     <thead>
                          <tr>
-                             <th style="width:32%" colspan="3">Machine</th>
-                             <th style="width:5%">JAN</th>
-                             <th style="width:5%">FEB</th>
-                             <th style="width:5%">MAR</th>
-                             <th style="width:5%">APR</th>
-                             <th style="width:5%">MAY</th>
-                             <th style="width:5%">JUN</th>
-                             <th style="width:5%">JULY</th>
-                             <th style="width:5%">AUG</th>
-                             <th style="width:5%">SEP</th>
-                             <th style="width:5%">OCT</th>
-                             <th style="width:5%">NOV</th>
-                             <th style="width:5%">DEC</th>
-                             <th style="width:8%">Total</th>
+                             <th colspan="3">Machine</th>
+                             <th>JAN</th>
+                             <th>FEB</th>
+                             <th>MAR</th>
+                             <th>APR</th>
+                             <th>MAY</th>
+                             <th>JUN</th>
+                             <th>JULY</th>
+                             <th>AUG</th>
+                             <th>SEP</th>
+                             <th>OCT</th>
+                             <th>NOV</th>
+                             <th>DEC</th>
+                             <th>Total</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <t t-foreach="docs" t-as="o">
-                            <tr  style="page-break-before: always !important" >
-                                <th colspan="16" class="text-center"><span t-esc="o.name"/></th>
-                            </tr>
-                            <t t-set="categs" t-value="get_category(o)"/>
-                            <t t-foreach="categs" t-as="c">
-                                    <tr>
-                                        <th colspan="16" class="text-left"><span t-field="c.name"/></th>
-                                    </tr>
+                     <tbody>
+                         <tr>
+                            <th colspan="16" class="text-center"><span t-esc="o.name"/></th>
+                         </tr>
+                     </tbody>
+                     <t t-set="categs" t-value="get_category(o)"/>
+                     <t t-foreach="categs" t-as="c">
+                    <tbody style="page-break-inside: avoid;">
+                         <tr  style="page-break-inside: avoid;">
+                             <th colspan="16" class="text-left"><span t-field="c.name"/></th>
+                         </tr>
                                     <t t-set="macs" t-value="get_machine(o,c)" />
                                     <t t-set="months" t-value="get_months"/>
                                     <t t-foreach="macs" t-as="m">
@@ -49,7 +52,7 @@
                                         <t t-set="job_order_info" t-value="get_breakdown_count(m_val.id)" />
                                         <t  t-set="b" t-value="job_order_info.get('breakdown_count')" />
                                         <t  t-set="i" t-value="job_order_info.get('idle_time')" />
-                                            <tr style="page-break-inside:avoid !important">
+                        <tr  style="page-break-inside: avoid;">
                                                 <td style="width:7%" rowspan="3"> <span t-esc="m_val.code"/></td>
                                                 <td style="width:18%" rowspan="3">  <span t-esc="m_val.name"/></td>
                                                 <td style="width:5%">Breakdown</td>
@@ -58,14 +61,14 @@
                                                 </td>
                                                  <td style="width:8%" class="text-right"><span t-esc="b.get('total_job_order')"/> </td>
                                             </tr>
-                                            <tr style="page-break-inside:avoid !important">
+                        <tr  style="page-break-inside: avoid;" >
                                                 <td style="width:5%" class="text-left">Expense</td>
                                                  <td style="width:5%" class="text-right" t-foreach="months" t-as="month">
                                                      <span t-esc="m.get(month)" />
                                                  </td>
                                                 <td  style="width:8%"  class="text-right"><strong t-esc="m.get('total_expense')"/> </td>
                                             </tr>
-                                            <tr style="page-break-inside:avoid !important">
+                        <tr  style="page-break-inside: avoid;">
                                                 <td style="width:5%" class="text-left">Idle Time</td>
                                                  <td style="width:5%" class="text-center small" t-foreach="months" t-as="month">
                                                      <t t-set="i_val" t-value="i.get(month)"/>
@@ -78,12 +81,12 @@
                                                  </td>
                                                 <td  style="width:8%"  class="text-right">  </td>
                                             </tr>
-                                    </t>
-                             </t>
-
-                        </t>
+                      </t>
                     </tbody>
+                     </t>
                  </table>
+                    <p style="page-break-before: always"/>
+                </t>
             </div>
           </t>
          </t>
