@@ -10,14 +10,13 @@
                   <t t-foreach="docs['employees']" t-as="e">
                       <div class="row mb16">
                           <div class="col-xs-2"> Employee : </div>
-                          <div class="col-xs-8">
-                              <strong> [ <span t-field="e.cicon_employee_id"/> ] - <span t-field="e.name"/> </strong> </div>
-                      </div>
-                      <div class="row mb16">
-                          <div class="col-xs-3"> Department / Shift : </div>
-                          <div class="col-xs-8">
+                          <div class="col-xs-4">
+                              <strong> [ <span t-field="e.cicon_employee_id"/> ] - <span t-field="e.name"/> </strong>
+                          </div>
+                          <div class="col-xs-2">Department/Shift:</div>
+                          <div class="col-xs-3">
                            <span t-field="e.department_id.name"/> / <span t-esc="e.work_shift.name or ''"/> </div>
-                      </div>
+                           </div>
                         <table class="table table-bordered">
                              <thead>
                                  <tr>
@@ -56,7 +55,7 @@
                                             <span t-field="a.sign_out.utc_datetime" t-field-options='{"format": "dd-MM-yyyy hh:mm"}'/>
                                         </t>
                                  </td>
-                                <td>
+                                <td class="text-right">
                                     <t t-if="a and a.work_hour > 0" >
                                         <span t-esc="str(a.work_hour).replace('.',':')"/>
                                     </t>
@@ -65,7 +64,7 @@
                                 <t t-if="a and a.leave_id">
                                     <span t-field="a.leave_id.leave_type"/> </t>
                                 </td>
-                                <td>
+                                <td class="text-right" >
                                     <t t-if="a and a.punch_log_count">
                                         <span t-esc="a.punch_log_count"/>
                                     </t>
