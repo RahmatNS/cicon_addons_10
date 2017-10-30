@@ -47,12 +47,12 @@
                                     </t>
                                     <td>
                                         <t t-if="a and a.sign_in">
-                                            <span t-field="a.sign_in.utc_datetime" t-field-options='{"format": "dd-MM-yyyy hh:mm"}'/>
+                                            <span t-field="a.sign_in.utc_datetime" t-field-options='{"format": "dd-MM-yyyy hh:mm a"}'/>
                                         </t>
                                     </td>
                                  <td >
                                      <t t-if="a and a.sign_out">
-                                            <span t-field="a.sign_out.utc_datetime" t-field-options='{"format": "dd-MM-yyyy hh:mm"}'/>
+                                            <span t-field="a.sign_out.utc_datetime" t-field-options='{"format": "dd-MM-yyyy hh:mm a"}'/>
                                         </t>
                                  </td>
                                 <td class="text-right">
