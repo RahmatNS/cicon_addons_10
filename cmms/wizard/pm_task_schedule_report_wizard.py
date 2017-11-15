@@ -34,6 +34,9 @@ class CmmsPmSchPlanReportWizard(models.TransientModel):
 
     rpt_month = fields.Selection(_MONTHS, string="Month", required=True, default=_get_this_month)
     rpt_year = fields.Selection(_get_year, string="Year", required=True, default=_get_this_year)
+    machine_type_ids = fields.Many2many('cmms.machine.type', 'cmmms_report_plan_machine_type_sel_rel', 'wizard_id',
+                                        'type_id',
+                                        string="Machine Types")
 
     @api.multi
     def show_report(self,data):
@@ -41,6 +44,9 @@ class CmmsPmSchPlanReportWizard(models.TransientModel):
         ctx = dict(self._context)
         ctx['rpt_month'] = int(self.rpt_month)
         ctx['rpt_year'] = int(self.rpt_year)
+        ctx['machine_type_ids'] = self.machine_type_ids._ids
+        if self.machine_type_ids:
+            ctx['sub_heading'] = '[ ' + ','.join(map( lambda a: a.name ,self.machine_type_ids)) + ' ]'
         ctx['heading'] = 'Maintenance Preventive Plan [' + dict(self._MONTHS)[self.rpt_month] + '-' + self.rpt_year + ']'
         datas = {'ids': self.env.context.get('active_ids')}
         return self.with_context(ctx).env['report'].get_action(self, report_name='cmms.cmms_pm_plan_report_template', data=datas)

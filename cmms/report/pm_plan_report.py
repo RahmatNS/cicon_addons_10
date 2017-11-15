@@ -17,6 +17,7 @@ class PmSchPlanReport(models.AbstractModel): # Report File Name
             'doc_model': report.model,
             'docs': _docs,
             'heading': self._context.get('heading'),
+            'sub_heading': self._context.get('sub_heading', False),
             'get_pm_detail': self._get_pm_details
         }
         #print docargs
@@ -41,7 +42,8 @@ class PmSchPlanReport(models.AbstractModel): # Report File Name
                 _interval = _sch_recs.mapped('interval_id')
                 for _intv in _interval:
                     _sch_intv = _sch_recs.filtered(lambda r: r.interval_id.id == _intv.id)
-                    _machines = _sch_intv.mapped('machine_ids')
+                    _machs = _sch_intv.mapped('machine_ids')
+                    _machines = _machs.filtered(lambda m: m.type_id.id in self._context.get('machine_type_ids'))
                     _m_task_count = {}
                     for m in _machines:
                         _sch_intv_machine = _sch_intv.filtered(lambda r: m in r.machine_ids)
@@ -50,8 +52,8 @@ class PmSchPlanReport(models.AbstractModel): # Report File Name
                         _pm_task_duration = self._get_duration(_duration)
                         _m_task_count[m.code] = str(len(_sch_intv_machine.mapped('pm_task_ids'))) + '[' + _pm_task_duration + ']'
                         #print _pm_task_duration
-                    _pm_list[_intv.name] = _m_task_count
-
+                    if _m_task_count:
+                        _pm_list[_intv.name] = _m_task_count
         return _pm_list
 
 

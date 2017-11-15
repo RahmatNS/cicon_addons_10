@@ -10,6 +10,9 @@
                         <field name="rpt_month"/>
                         <field name="rpt_year"/>
                      </group>
+                    <group>
+                        <field name="machine_type_ids" widget="many2many_tags"  options="{'no_open': True, 'no_create':True}"  />
+                    </group>
                     <footer>
                         <button name="show_report" string="Show" type="object"  class="oe_highlight"/>
                         or
