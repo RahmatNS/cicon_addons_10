@@ -42,8 +42,9 @@ class PmSchPlanReport(models.AbstractModel): # Report File Name
                 _interval = _sch_recs.mapped('interval_id')
                 for _intv in _interval:
                     _sch_intv = _sch_recs.filtered(lambda r: r.interval_id.id == _intv.id)
-                    _machs = _sch_intv.mapped('machine_ids')
-                    _machines = _machs.filtered(lambda m: m.type_id.id in self._context.get('machine_type_ids'))
+                    _machines = _sch_intv.mapped('machine_ids')
+                    if self._context.get('machine_type_ids',False):
+                        _machines = _machines.filtered(lambda m: m.type_id.id in self._context.get('machine_type_ids'))
                     _m_task_count = {}
                     for m in _machines:
                         _sch_intv_machine = _sch_intv.filtered(lambda r: m in r.machine_ids)
