@@ -33,10 +33,10 @@
                               <t t-set="app_list" t-value="get_approval(o.id)"/>
                               <td> <span t-esc="o_index+1"/> </td>
                               <td> <span t-field="o.partner_id.name"/> </td>
-                              <t t-if="show_consultant">
-                               <td> <span t-field="o.consultant_id.name"/> </td>
-                              </t>
                               <td> <span t-field="o.name"/> </td>
+                              <t t-if="show_consultant">
+                                 <td> <span t-field="o.consultant_id.name"/> </td>
+                              </t>
                                <t t-foreach="origins" t-as="org">
                                    <t t-set="stat" t-value="app_list.get(org.id,False)"/>
                                    <td class="text-center"  t-att-class="'warning' if stat == 'pending' else 'info'  if stat == 'verbal' else 'success' if stat == 'approve' else 'danger' if stat == 'reject' else '' ">
