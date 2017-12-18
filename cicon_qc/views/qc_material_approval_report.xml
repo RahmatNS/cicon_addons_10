@@ -18,6 +18,9 @@
                                 <th class="text-center" style="width:2%">Sno</th>
                                 <th class="text-center"  style="width:18%">Customer</th>
                                 <th class="text-center"  style="width:20%">Project</th>
+                                <t t-if="show_consultant">
+                                    <th class="text-center"  style="width:20%">Consultant</th>
+                                </t>
                                 <t t-set="origins" t-value="get_origins"/>
                                 <th class="text-center"  t-foreach="origins" t-as="org">
                                   <span t-field="org.name"/>
@@ -30,6 +33,9 @@
                               <t t-set="app_list" t-value="get_approval(o.id)"/>
                               <td> <span t-esc="o_index+1"/> </td>
                               <td> <span t-field="o.partner_id.name"/> </td>
+                              <t t-if="show_consultant">
+                               <td> <span t-field="o.consultant_id.name"/> </td>
+                              </t>
                               <td> <span t-field="o.name"/> </td>
                                <t t-foreach="origins" t-as="org">
                                    <t t-set="stat" t-value="app_list.get(org.id,False)"/>
