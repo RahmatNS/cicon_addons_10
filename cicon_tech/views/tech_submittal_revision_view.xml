@@ -19,11 +19,11 @@
             <form string="Technical Submittals" >
                 <header>
                     <button name="print_revision" states="approved" confirm="Status Will be Changed to 'Submitted' !" icon="fa-print" string="Print" type="object" class="oe_highlight"/>
-                    <button name="set_approved" string="Approved" states="new" type="object" class="oe_highlight" groups="cicon_tech.group_tech_approval"/>
+                    <button name="set_approved" string="Approve" states="new" type="object" class="oe_highlight" icon="fa-check-circle" groups="cicon_tech.group_tech_approval"/>
                     <button name="send_email" string="Send Mail" states="submitted" icon="fa-at" type="object"/>
-                    <button name="mark_submit" states="approved" confirm="Status Will be Changed to Submitted !" string="Mark As Submitted" type="object"/>
+                    <button name="mark_submit" icon="fa-check-square-o" states="approved" confirm="Status Will be Changed to Submitted !" string="Mark As Submitted" type="object"/>
                     <!--<button name="mark_draft" states="submitted,approved" confirm="Status Will be Changed to Draft !" string="Set as Draft" type="object"/>-->
-                    <button name="mark_draft" states="cancel,submitted,approved" confirm="Status Will be Changed to Draft !" string="Set as Draft" type="object" groups="cicon_tech.group_tech_admin" />
+                    <button name="mark_draft"  states="cancel,submitted,approved" confirm="Status Will be Changed to Draft !" string="Set as Draft" type="object" groups="cicon_tech.group_tech_admin" />
                     <button name="submittal_revision" confirm='Please Confirm Revision' string="Revision" type="object" icon="fa-clipboard"  class="oe_highlight"  states="submitted"/>
                     <button name="delete_revision" confirm="Please Confirm Deleted" string="Delete" type="object"  icon="fa-times" states="cancel" groups="base.group_no_one"/>
                     <field name="state"  widget="statusbar" statusbar_visible="new,approved,submitted" />

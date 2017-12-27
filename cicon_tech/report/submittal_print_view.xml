@@ -18,7 +18,7 @@
            <t t-call="cicon_tech.tech_cicon_layout_footer" />
 </template>
 
-<template id="tech_cicon_layout_header">
+        <template id="tech_cicon_layout_header">
     <div class="header">
         <div class="row">
             <div class="col-xs-2">
@@ -64,8 +64,7 @@
     </div>
 </template>
 
-
-<template id="tech_cicon_layout_footer">
+        <template id="tech_cicon_layout_footer">
     <div class="footer">
         <div class="row zero_min_height">
             <div  style="border-top: 1px solid black;">
@@ -87,11 +86,7 @@
     </div>
 </template>
 
-
-
-
-
-    <template id="report_submittal_template">
+        <template id="report_submittal_template">
     <t t-call="report.html_container">
         <t t-foreach="docs" t-as="o">
         <t t-call="cicon_tech.tech_cicon_external_layout">

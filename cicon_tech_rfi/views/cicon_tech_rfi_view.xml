@@ -101,7 +101,7 @@
 
 
         <menuitem  parent="cicon_tech.tech_menu_submittal" id="tech_menu_tech_rfi"
-                  action="action_cicon_tech_rfi" sequence="20" />
+                  action="action_cicon_tech_rfi" sequence="30" />
 
 
 

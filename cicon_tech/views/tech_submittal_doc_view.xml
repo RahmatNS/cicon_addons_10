@@ -108,7 +108,7 @@
 
 
         <menuitem  parent="tech_menu_submittal"  id="tech_menu_submittal_doc_revision_list"
-                  action="action_tech_submittal_doc_revision" sequence="50" />
+                  action="action_tech_submittal_doc_revision" sequence="20" />
 
 
 

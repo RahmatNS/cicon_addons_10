@@ -10,14 +10,17 @@ class CiconCustJobSite(models.Model):
         _job_site_id = self.env['cicon.job.site'].search([('site_ref_no','!=',False)], order='id desc', limit=1)
         return _job_site_id.site_ref_no
 
-    @api.one
+    @api.multi
     def _get_submittal_count(self):
         """ Compute Valid Submittal Revisions Count for Job Site field 'submittal_count', just to show
         filtered submittal revision on Job Site"""
-        _sub_count = self.env['tech.submittal.revision'].search_count([('job_site_id', '=', self.id),
+        _rev_obj = self.env['tech.submittal.revision']
+        for _rec in self:
+            _sub_count = _rev_obj.search_count([('job_site_id', '=', _rec.id),
                                                                        ('state', '!=', 'resubmitted')])
-        self.submittal_count = _sub_count
-
+            _last_submiital = _rev_obj.search([('job_site_id', '=', _rec.id)],order='id desc',limit=1)
+            _rec.submittal_count = _sub_count
+            _rec.last_submittal_date = _last_submiital.submittal_date
 
     project_id = fields.Many2one('project.project', 'Project', domain="[('partner_id','=',partner_id)]",
                                  help="Link with Project Management or leave it blank")
@@ -28,22 +31,17 @@ class CiconCustJobSite(models.Model):
     last_site_ref = fields.Char(default=_get_last_site_ref, string='Previous Site Reference',
                                 readonly=True, store=False, help="Last created Site Reference")
     submittal_count = fields.Integer(compute=_get_submittal_count, string="Submittal Count")
-
-
-
+    last_submittal_date = fields.Date(compute=_get_submittal_count, string='Last Submitted',readonly=True)
 
     _sql_constraints = [('unique_site_ref', 'UNIQUE(site_ref_no)', 'Unique Site Reference')]
-
-CiconCustJobSite()
 
 
 class ResCompany(models.Model):
     _inherit = 'res.company'
-
     # Each Company Can Set a Prefix , use to Create Reference Code on Submittal
     submittal_prefix = fields.Char('Submittal Prefix')
 
-ResCompany()
+
 
 
 # class CicJobSite(models.Model):
