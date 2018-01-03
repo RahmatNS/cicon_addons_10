@@ -26,4 +26,3 @@ class DrawingCreator(models.Model):
 
     _sql_constraints = [('padding_count', 'CHECK(padding_zero < 5)', 'Padding Zero Value Should be < 5 ')]
 
-DrawingCreator()

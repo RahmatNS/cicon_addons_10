@@ -72,4 +72,14 @@ class DocumentRevisionWizard(models.TransientModel):
         return True
 
 
-DocumentRevisionWizard()
+class TechBBSWeightWizard(models.TransientModel):
+    _name = 'tech.bbs.weight.wizard'
+    _description = """ BBS Weight"""
+
+    revision_id = fields.Many2one('tech.submittal.revision', string='Submittal Revision', required=True)
+    bbs_weight = fields.Float('BBS Weight', required=True)
+
+    @api.multi
+    def update_weight(self):
+        self.ensure_one()
+        return self.revision_id.write({'bbs_weight': self.bbs_weight})
