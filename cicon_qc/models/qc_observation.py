@@ -63,7 +63,7 @@ class cicon_qc_observation(models.Model):
     reported_by = fields.Many2one('hr.employee', 'Reported By', readonly=True, states={'new': [('readonly', False)], 'open': [('readonly', False)]})
     resp_employee = fields.Many2one('hr.employee', 'Responsible Person', readonly=True, states={'new': [('readonly', False)], 'open': [('readonly', False)]})
     resp_manager = fields.Many2one('hr.employee', 'Responsible Manager', readonly=True, states={'new': [('readonly', False)], 'open': [('readonly', False)]})
-    description = fields.Text('Observation',readonly=True, states={'new': [('readonly', False)], 'open': [('readonly', False)]})
+    description = fields.Html('Observation',readonly=True, states={'new': [('readonly', False)], 'open': [('readonly', False)]})
     root_cause = fields.Text('Root Cause', readonly=True, states={'new': [('readonly', False)], 'open': [('readonly', False)]})
     corr_act = fields.Text('Corrective Action',readonly=True, states={'new': [('readonly', False)], 'open': [('readonly', False)]})
     prev_act = fields.Text('Preventive Action', readonly=True, states={'new': [('readonly', False)], 'open': [('readonly', False)]})
@@ -91,4 +91,4 @@ class cicon_qc_observation(models.Model):
 
     _sql_constraints = [('uniq_name', 'UNIQUE(name)', 'Unique Name ')]
 
-cicon_qc_observation()
+

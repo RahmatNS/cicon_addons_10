@@ -39,9 +39,17 @@
                               </t>
                                <t t-foreach="origins" t-as="org">
                                    <t t-set="stat" t-value="app_list.get(org.id,False)"/>
-                                   <td class="text-center"  t-att-class="'warning' if stat == 'pending' else 'info'  if stat == 'verbal' else 'success' if stat == 'approve' else 'danger' if stat == 'reject' else '' ">
-                                     <span t-esc="states.get(stat)"/>
-                                   </td>
+                                   <t t-if="hide_reject and stat == 'reject'">
+                                       <td class="text-center">
+                                           <span>.</span>
+                                       </td>
+                                   </t>
+                                   <t t-if="(hide_reject and  stat != 'reject') or (hide_reject == false)">
+                                       <td class="text-center"  t-att-class="'warning' if stat == 'pending' else 'info'  if stat == 'verbal' else 'success' if stat == 'approve' else 'danger' if stat == 'reject' else '' ">
+                                             <span t-esc="states.get(stat)"/>
+                                       </td>
+                                   </t>
+
                                </t>
                               <td>
                                   <span t-field="o.note"/>

@@ -11,6 +11,7 @@ class QcCommonReportWizard(models.TransientModel):
     origin_value_ids = fields.Many2many('product.attribute.value',
                                              domain="[('attribute_id.name','=','Steel Origin' )]", string='Origins')
     show_consultant = fields.Boolean('Show Consultant', default=False)
+    hide_reject = fields.Boolean('Hide Rejected', default=False)
     company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env.user.company_id)
 
     @api.multi
@@ -22,6 +23,7 @@ class QcCommonReportWizard(models.TransientModel):
         if self.report_list == 'steel_approval_report':
             ctx['heading'] = "Steel Approval Report"
             ctx['show_consultant'] = self.show_consultant
+            ctx['hide_reject'] = self.hide_reject
             _qry = [('attribute_id.name','=','Steel Origin' )]
             if self.origin_value_ids:
                 if self.option_select =='include':

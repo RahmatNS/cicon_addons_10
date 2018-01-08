@@ -30,7 +30,8 @@ class MaterialApprovalReport(models.AbstractModel): # Report File Name
              'get_approval': self._get_material_approved_project,
              'get_state_list': self._get_state_list,
              'get_datetime': self._get_current_datetime,
-             'show_consultant': self._context.get('show_consultant', False)
+             'show_consultant': self._context.get('show_consultant', False),
+             'hide_reject': self._context.get('hide_reject', False)
         }
         return report_obj.render('cicon_qc.qc_material_approval_report_template', docargs)
 
