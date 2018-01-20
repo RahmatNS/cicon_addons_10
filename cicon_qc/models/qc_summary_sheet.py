@@ -69,8 +69,6 @@ class QcSummary(models.Model):
         # vals['name'] = self.env['ir.sequence'].next_by_code('cic.qc.summary.seq') or 'New'
         return super(QcSummary, self).create(vals)
 
-QcSummary()
-
 
 class QcCertLine(models.Model):
     _name = 'cic.qc.cert.line'
@@ -100,8 +98,6 @@ class QcCertLine(models.Model):
     #_sql_constraints = [('uniq_line', 'UNIQUE(qc_summary_id,dia_attrib_value_id,origin_attrib_value_id)', 'Cert Line Name Must be Unique')]
     _sql_constraints = [('uniq_line', 'CHECK(1=1)','Cert Line Name Must be Unique')]
 
-QcCertLine()
-
 
 class QcDnLine(models.Model):
     _name = 'cic.qc.dn.line'
@@ -127,8 +123,6 @@ class QcDnLine(models.Model):
     #_sql_constraints = [('uniq_dn', 'UNIQUE(dn_no)', 'DN  Must be Unique')]
     _sql_constraints = [('uniq_dn', 'UNIQUE(delivery_order_id,qc_summary_id)', 'DN  Must be Unique')]
 
-QcDnLine()
-
 
 class QcCertType(models.Model):
     _name = 'cic.qc.cert.type'
@@ -137,8 +131,6 @@ class QcCertType(models.Model):
     name = fields.Char('Certificate Type', required=True)
 
     _sql_constraints = [('uniq_cert_type', 'UNIQUE(name)', 'Certificate Type Must be Unique')]
-
-QcCertType()
 
 
 class QcMillCertFile(models.Model):
@@ -200,10 +192,6 @@ class QcMillCertFile(models.Model):
 
     _sql_constraints = [('unique_name', 'UNIQUE(supplier_id,name)', 'Certificate Number must be Unique')]
 
-QcMillCertFile()
-
-
-
 
 class QcMillCertLine(models.Model):
     _name = 'cic.qc.mill.cert.line'
@@ -225,7 +213,7 @@ class QcMillCertLine(models.Model):
 
     _sql_constraints = [('uniq_cert', 'UNIQUE(name,cert_file_id)', 'Summary Name Must be Unique')]
 
-QcMillCertLine()
+
 
 
 

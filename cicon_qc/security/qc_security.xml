@@ -12,5 +12,13 @@
             <field name="implied_ids" eval="[(4, ref('group_qc_user'))]"/>
         </record>
 
+
+        <record id="qc_multi_company_summary_sheet" model="ir.rule">
+            <field name="name">Summary Sheet Allowed Company</field>
+            <field name="model_id" ref="model_cic_qc_summary"/>
+            <field name="groups" eval="[(4, ref('group_qc_user'))]"/>
+            <field name="domain_force"> ['|',('company_id','in',[user.company_ids._ids]),('company_id','=',False)]</field>
+        </record>
+
     </data>
 </odoo>

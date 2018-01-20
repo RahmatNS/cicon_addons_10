@@ -54,7 +54,7 @@
 
 
 
-        <menuitem id="menu_order_analysis_rpt" parent="cicon_menu_report" action="action_order_analysis_report" />
+        <!--<menuitem id="menu_order_analysis_rpt" parent="cicon_menu_report" action="action_order_analysis_report" />-->
 
     </data>
 </odoo>
