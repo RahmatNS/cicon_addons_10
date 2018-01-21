@@ -14,7 +14,7 @@ class MaterialApprovalReport(models.AbstractModel): # Report File Name
             active_ids = data['context'].get('active_ids', False)
         else:
             active_ids = docids
-        _sites = self.env['cicon.job.site'].search([('id', 'in', active_ids)])
+        _sites = self.env['cicon.job.site'].search([('id', 'in', active_ids), '|', ('company_id','=', self._context.get('company_id')), ('company_id', '=', False)])
         _docs = _sites.sorted(key=lambda a: (a.partner_id.name, a.name))
         _origin_ids = data and data.get('origin_ids', False)
         if _origin_ids:
