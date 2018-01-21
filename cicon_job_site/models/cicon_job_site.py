@@ -16,7 +16,7 @@ class CiconJobSite(models.Model):
 
     consultant_id = fields.Many2one('res.partner', domain="[('is_consultant','=', True)]", string='Consultant',  track_visibility='onchange' )
     client_id = fields.Many2one('res.partner',  domain="[('is_client','=', True)]", string='Client',  track_visibility='onchange')
-    company_id = fields.Many2one('res.company', string='Company')
+    company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env.user.company_id)
     active = fields.Boolean('Active', default=True,  track_visibility='onchange')
     archive = fields.Boolean('Archive', help="This will hide project from reports",  default=False,  track_visibility='onchange')
     note = fields.Text('Notes')
