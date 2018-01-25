@@ -43,14 +43,14 @@
             <field name="name">Production Order By Company</field>
             <field name="model_id" ref="model_cicon_prod_order"/>
             <field name="groups" eval="[(4, ref('group_prod_user'))]"/>
-            <field name="domain_force"> ['|','|',('customer_order_id.company_id','in',user.company_ids._ids),('customer_order_id.company_id','=',False),('customer_order_id.company_id','child_of',[user.company_id.id])] </field>
+            <field name="domain_force"> ['|','|',('created_user.company_id','in',user.company_ids._ids),('created_user.company_id','=',False),('created_user.company_id','child_of',[user.company_id.id])] </field>
         </record>
 
          <record id="cicon_prod_multi_company_delivery_order" model="ir.rule">
             <field name="name">Delivery Order By Company</field>
             <field name="model_id" ref="model_cicon_prod_delivery_order"/>
             <field name="groups" eval="[(4, ref('group_prod_user'))]"/>
-            <field name="domain_force"> ['|','|',('customer_order_id.company_id','in',user.company_ids._ids),('customer_order_id.company_id','=',False),('customer_order_id.company_id','child_of',[user.company_id.id])] </field>
+            <field name="domain_force"> ['|','|',('create_uid.company_id','in',user.company_ids._ids),('create_uid.company_id','=',False),('create_uid.company_id','child_of',[user.company_id.id])] </field>
         </record>
 
 

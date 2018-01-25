@@ -21,7 +21,6 @@ class cicon_prod_order(models.Model):
             if rec.template_ids:
                 rec.template_str = ','.join([x.name for x in rec.template_ids])
 
-
     name = fields.Char('Armaor Code / Internal Ref.', size=12, required=True, track_visibility="onchange", readonly=True, states={'pending': [('readonly', False)]})
     revision_no = fields.Integer('Revision No', required=True, readonly=True, track_visibility="onchange", states={'pending': [('readonly', False)]})
     description = fields.Char('Description', track_visibility="onchange", readonly=True, states={'pending': [('readonly', False)]})
