@@ -17,7 +17,7 @@
             <field name="name">Summary Sheet Allowed Company</field>
             <field name="model_id" ref="model_cic_qc_summary"/>
             <field name="groups" eval="[(4, ref('group_qc_user'))]"/>
-            <field name="domain_force"> ['|',('company_id','in',user.company_ids._ids),('company_id','=',False)]</field>
+            <field name="domain_force">  ['|','|',('company_id','in',user.company_ids._ids),('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
         </record>
 
     </data>
