@@ -125,7 +125,7 @@ class cicon_prod_order(models.Model):
     _sql_constraints = [('unique_code', 'UNIQUE(name,revision_no)', 'Code By Revision Must be unique')]
 
 
-cicon_prod_order()
+
 
 
 class cicon_prod_order_line(models.Model):
@@ -154,7 +154,7 @@ class cicon_prod_order_line(models.Model):
     product_tmpl_id = fields.Many2one('product.template', related='product_id.product_tmpl_id', readonly=True)
     dia_attrib_value_id = fields.Many2one('product.attribute.value', compute=_get_dia_value, string='Diameter', store=True)
 
-cicon_prod_order_line()
+
 
 
 class cicon_prod_plan(models.Model):
@@ -175,7 +175,7 @@ class cicon_prod_plan(models.Model):
 
     _sql_constraints = [('uniq_plan', 'UNIQUE(plan_date,work_shift)', "Unique Plan !")]
 
-cicon_prod_plan()
+
 
 
 class cicon_customer_order(models.Model):
@@ -217,6 +217,6 @@ class cicon_customer_order(models.Model):
             return  self.write({'state': 'cancel'})
 
 
-cicon_customer_order()
+
 
 

@@ -89,7 +89,7 @@ class cicon_customer_order(models.Model):
         testDt = pytz.utc.localize(_time_val)
         TestDt = testDt.astimezone(pytz.timezone(time_local))
         return TestDt.strftime('%a,  %d-%b-%Y %H:%M')
-cicon_customer_order()
+
 
 
 

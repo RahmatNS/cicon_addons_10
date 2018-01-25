@@ -30,5 +30,29 @@
         </record>
 
 
+
+        <record id="cicon_prod_multi_company_customer_order" model="ir.rule">
+            <field name="name">Customer Order By Company</field>
+            <field name="model_id" ref="model_cicon_customer_order"/>
+            <field name="groups" eval="[(4, ref('group_prod_user'))]"/>
+            <field name="domain_force"> ['|','|',('company_id','in',user.company_ids._ids),('company_id','=',False),('company_id','child_of',[user.company_id.id])] </field>
+        </record>
+
+
+        <record id="cicon_prod_multi_company_prod_order" model="ir.rule">
+            <field name="name">Production Order By Company</field>
+            <field name="model_id" ref="model_cicon_prod_order"/>
+            <field name="groups" eval="[(4, ref('group_prod_user'))]"/>
+            <field name="domain_force"> ['|','|',('customer_order_id.company_id','in',user.company_ids._ids),('customer_order_id.company_id','=',False),('customer_order_id.company_id','child_of',[user.company_id.id])] </field>
+        </record>
+
+         <record id="cicon_prod_multi_company_delivery_order" model="ir.rule">
+            <field name="name">Delivery Order By Company</field>
+            <field name="model_id" ref="model_cicon_prod_delivery_order"/>
+            <field name="groups" eval="[(4, ref('group_prod_user'))]"/>
+            <field name="domain_force"> ['|','|',('customer_order_id.company_id','in',user.company_ids._ids),('customer_order_id.company_id','=',False),('customer_order_id.company_id','child_of',[user.company_id.id])] </field>
+        </record>
+
+
     </data>
 </odoo>
