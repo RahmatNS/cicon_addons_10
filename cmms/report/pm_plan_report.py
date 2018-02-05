@@ -58,5 +58,3 @@ class PmSchPlanReport(models.AbstractModel): # Report File Name
         return _pm_list
 
 
-
-PmSchPlanReport()

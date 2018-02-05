@@ -28,7 +28,8 @@ class ReportPartsbyProductTypeSummary(models.AbstractModel): # Report File Name
             'get_machine_types': self._get_machine_types,
             'get_ptypes_for_mtype': self._get_ptypes_for_mtype ,
             'get_total_mtype_ptype': self._get_total_for_machine_type_prod_type,
-            'get_total_for_machine_type': self._get_total_for_machine_type
+            'get_total_for_machine_type': self._get_total_for_machine_type,
+            'get_total_for_machine' : self._get_total_for_machine_by_prod_type,
 
         }
         return report_obj.render('cmms.report_partsby_producttype_summary_template', docargs)
@@ -79,6 +80,11 @@ class ReportPartsbyProductTypeSummary(models.AbstractModel): # Report File Name
         else:
             _machines = self._inv_lines.filtered(lambda  r: r.machine_id.category_id.id == _categ and r.spare_part_type_id.id == _type).mapped('machine_id')
         return _machines
+
+    def _get_total_for_machine_by_prod_type(self, _machine_id, _ptype_id):
+        _total = sum([x.amount for x in self._inv_lines if
+                      x.spare_part_type_id.id == _ptype_id and x.machine_id.id == _machine_id])
+        return _total
 
     def _get_invoices(self, _machine, _ptype):
         _invoices = self._inv_lines.filtered(lambda r: r.machine_id == _machine and r.spare_part_type_id.id == _ptype)
