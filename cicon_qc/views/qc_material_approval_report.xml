@@ -62,5 +62,47 @@
              </t>
         </t>
     </template>
+
+
+
+    <template id="qc_material_approval_status_report_template">
+        <t t-call="report.html_container">
+             <t t-call="cicon_qc.cicon_qc_external_layout">
+                <div class="page">
+                    <div class="row">
+                        <table class="table table-bordered">
+                            <caption > <h4 class="text-center" > STEEL ORIGIN APPROVAL STATUS </h4>
+                            </caption>
+                            <thead>
+                                <th> Customer </th>
+                                <th> Project </th>
+                                <!--<th> Client </th>-->
+                                <!--<th> Consultant </th>-->
+                                <th> Date </th>
+                                <th> Origin </th>
+                                <th> Status </th>
+                                <th> Remarks </th>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="docs" t-as="o" style=" page-break-inside: avoid">
+                                    <td style="width:18%"> <span t-field="o.partner_id.name" /> </td>
+                                    <td style="width:20%"> <span t-field="o.job_site_id.name" /> </td>
+                                    <!--<td> <span t-field="o.client_id.name" /> </td>-->
+                                    <!--<td> <span t-field="o.consultant_id.name" /> </td>-->
+                                    <td style="width:12%" > <span t-field="o.date" /> </td>
+                                    <td style="width:10%"> <span t-field="o.origin_attrib_value_id.name" /> </td>
+                                    <t t-set="stat" t-value="o.state" />
+                                    <td style="width:10%" class="text-center"  t-att-class="'warning' if stat == 'pending' else 'info'  if stat == 'verbal' else 'success' if stat == 'approve' else 'danger' if stat == 'reject' else '' "> <span t-field="o.state" /> </td>
+                                    <td style="width:30%"> <span t-field="o.remarks" /> </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+             </t>
+        </t>
+    </template>
+
 </data>
 </odoo>

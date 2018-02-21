@@ -27,5 +27,16 @@
         />
 
 
+       <report
+            id="report_steel_approval_status_report"
+            name="cicon_qc.qc_material_approval_status_report_template"
+            string="Steel Approval Status"
+            model="qc.material.approval"
+            report_type="qweb-pdf"
+            file="cicon_qc.qc_material_approval_report"
+
+        />
+
+
     </data>
  </odoo>

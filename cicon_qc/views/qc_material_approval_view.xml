@@ -87,6 +87,7 @@
                     <field name="consultant_id" widget="selection" />
                     <field name="client_id" widget="selection" />
                     <field name="origin_attrib_value_id" widget="selection"/>
+                    <field name="state" widget="selection"/>
                 </search>
 			</field>
         </record>
