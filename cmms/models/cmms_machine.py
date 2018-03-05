@@ -52,10 +52,16 @@ class CmmsPmScheme(models.Model):
     _log_access = False
 
     name = fields.Char('PM Scheme Name', size=50, required=True)
-    pm_tasks_ids = fields.One2many('cmms.pm.task.master', 'pm_scheme_id', "PM Tasks")
-    machine_ids = fields.One2many('cmms.machine','pm_scheme_id',"Machine")
+    pm_tasks_ids = fields.One2many('cmms.pm.task.master', 'pm_scheme_id', "PM Tasks", copy=True)
+    machine_ids = fields.One2many('cmms.machine','pm_scheme_id',"Machine", copy=False)
 
     _sql_constraints = [('unique_scheme', 'unique(name)', 'Scheme Must be unique')]
+
+    @api.multi
+    def copy(self, default=None):
+        self.ensure_one()
+        default = dict(default or {}, name=_('%s (copy)') % self.name)
+        return super(CmmsPmScheme, self).copy(default)
 
 
 class CmmsMachine(models.Model):
