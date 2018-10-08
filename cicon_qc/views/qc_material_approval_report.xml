@@ -38,7 +38,9 @@
                                  <td> <span t-field="o.consultant_id.name"/> </td>
                               </t>
                                <t t-foreach="origins" t-as="org">
-                                   <t t-set="stat" t-value="app_list.get(org.id,False)"/>
+                                   <t t-set="stat_res" t-value="app_list.get(org.id,{})"/>
+                                   <t t-set="stat" t-value="stat_res.get('state',False)"/>
+                                   <t t-set="warn" t-value="stat_res.get('warn_text',False)"/>
                                    <t t-if="hide_reject and stat == 'reject'">
                                        <td class="text-center">
                                            <span>.</span>
@@ -47,6 +49,16 @@
                                    <t t-if="(hide_reject and  stat != 'reject') or (hide_reject == false)">
                                        <td class="text-center"  t-att-class="'warning' if stat == 'pending' else 'info'  if stat == 'verbal' else 'success' if stat == 'approve' else 'danger' if stat == 'reject' else '' ">
                                              <span t-esc="states.get(stat)"/>
+                                              <t t-if="warn">
+                                                  <br/>
+                                                  <small>
+                                                      <mark>
+                                                          <strong>
+                                                              [ <span t-esc="warn" /> ]
+                                                          </strong>
+                                                      </mark>
+                                                  </small>
+                                              </t>
                                        </td>
                                    </t>
 

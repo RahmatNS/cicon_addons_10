@@ -9,13 +9,26 @@
             <form string="QC Report" create="false" edit="false">
                 <group>
                     <field name="report_list"/>
+                    <field name="show_filter"/>
   				</group>
-                <group>
-                    <field name="origin_value_ids" widget="many2many_tags" options="{'no_create':True, 'no_open': True}" />
-                    <field name="option_select" widget="radio"/>
-                    <field name="show_consultant"/>
-                    <field name="hide_reject"/>
-                </group>
+                <notebook>
+                    <page string="Selection">
+                        <group>
+                            <field name="origin_value_ids" widget="many2many_tags" options="{'no_create':True, 'no_open': True}" />
+                            <field name="option_select" widget="radio"/>
+                            <field name="show_consultant"/>
+                            <field name="hide_reject"/>
+                        </group>
+                    </page>
+                    <page string="Customer / Projects"  attrs="{'invisible':[('show_filter', '=', False)]}"  >
+                        <group>
+                            <field name="partner_id" options="{'no_create':True, 'no_open': True}"/>
+                            <field name="job_site_ids" widget="many2many_tags" domain="[('partner_id', '=', partner_id)]"
+                                options="{'no_create':True, 'no_open': True}"
+                            />
+                        </group>
+                    </page>
+                </notebook>
 
                 <group>
                     <field name="company_id" options="{'no_create':True, 'no_open': True}"/>

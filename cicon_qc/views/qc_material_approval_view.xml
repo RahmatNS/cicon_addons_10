@@ -54,6 +54,7 @@
                         </group>
                         <group>
                             <field name="remarks" />
+                            <field name="warning_text"/>
                         </group>
                     </sheet>
                       <div class="oe_chatter">

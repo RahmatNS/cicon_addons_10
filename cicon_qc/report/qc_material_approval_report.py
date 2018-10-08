@@ -14,6 +14,7 @@ class MaterialApprovalReport(models.AbstractModel): # Report File Name
             active_ids = data['context'].get('active_ids', False)
         else:
             active_ids = docids
+
         _sites = self.env['cicon.job.site'].search([('id', 'in', active_ids), '|', '|', ('company_id','=', self._context.get('company_id')), ('company_id', '=', False), ('company_id', 'in', self.env.user.company_ids._ids)])
         _docs = _sites.sorted(key=lambda a: (a.partner_id.name, a.name))
         _origin_ids = data and data.get('origin_ids', False)
@@ -42,7 +43,7 @@ class MaterialApprovalReport(models.AbstractModel): # Report File Name
         _approved_list = self.env['qc.material.approval'].search([('job_site_id','=', _site_id)])
         _res = {}
         for _app in _approved_list:
-            _res[_app.origin_attrib_value_id.id] = _app.state
+            _res[_app.origin_attrib_value_id.id] = {'state': _app.state, 'warn_text': _app.warning_text}
         return _res
 
     def _get_current_datetime(self):

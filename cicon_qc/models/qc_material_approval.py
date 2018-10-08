@@ -32,6 +32,7 @@ class QcMaterialApproval(models.Model):
                               ('verbal', 'Verbal'), ('approve', 'Approved'),
                               ('reject', 'Rejected')], string='Status', default='pending', track_visibility='onchange')
     remarks = fields.Text('Remarks')
+    warning_text = fields.Char('Warning')
 
     _sql_constraints = [('uniq_rec', 'UNIQUE(job_site_id,origin_attrib_value_id)', 'Origin must be unique for Job Site!')]
 
