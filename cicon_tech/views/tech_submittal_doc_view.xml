@@ -6,7 +6,7 @@
             <field name="name">tech.submittal.doc.tree</field>
             <field name="model">tech.submittal.document.revision</field>
             <field name="arch" type="xml">
-                <tree string="Submittal Documents"  delete="false">
+                <tree string="Submittal Documents" create="false"  delete="false" >
                     <field name="name" />
                     <field name="document_type_id" options="{'no_create':True,'no_open':True}" />
                     <field name="description"/>
@@ -14,7 +14,7 @@
                     <field name="rev_no"/>
                     <field name="draft_time"/>
                     <field name="revision_id" invisible="True"/>
-                    <button name="doc_revision" confirm='Please Confirm Revision' string="Document Revision" type="object" icon="fa-clipboard" />
+                    <!--<button name="doc_revision" confirm='Please Confirm Revision' string="Document Revision" type="object" icon="fa-clipboard" />-->
                 </tree>
             </field>
         </record>
@@ -24,7 +24,7 @@
             <field name="name">tech.submittal.doc.form</field>
             <field name="model">tech.submittal.document.revision</field>
             <field name="arch" type="xml">
-                <form string="Document" create="false" delete="false">
+                <form string="Document" create="false" delete="false" edit="false" >
                     <sheet>
                         <group>
                             <group>
@@ -44,7 +44,7 @@
                                 <field name="draft_time"/>
                                 <field name="is_revised" invisible="1"  />
                                 <field name="reason_id" options="{'no_open':True,'no_create':True}" attrs="{'invisible':[('rev_no','=',0)]}" />
-                                <field name="revision_id"   options="{'no_create':True,'no_open':True}" invisible="1"  />
+                                <field name="revision_id"   options="{'no_create':True,'no_open':False}"  />
                             </group>
                         </group>
                     </sheet>
@@ -63,6 +63,8 @@
                         <!--<filter string="Project" name="group_project_id" icon="terp-folder-violet" domain="[]" context="{'group_by':'job_site_id'}"/>-->
                         <!--<filter string="Submitted By" name="group_submitted_by" icon="terp-folder-violet" domain="[]" context="{'group_by':'submitted_by'}"/>-->
                     <!--</group>-->
+                    <field name="name"/>
+                    <field name="description"/>
                     <field name="revision_id" widget="selection"/>
                     <filter name="current_month" string="This Month" domain="[('date','&gt;=',time.strftime('%%Y-%%m-01'))]" help="Current Month Drawing" icon="terp-project"/>
                     <!--<filter name="my_submittal" string="My Submittal" domain="[('submitted_by','=',uid)]" help="My Submittal" icon="terp-project"/>-->

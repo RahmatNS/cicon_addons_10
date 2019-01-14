@@ -30,16 +30,16 @@
             </field>
         </record>
 
-        <act_window name="Document Revision"
-            src_model="tech.submittal.document.revision"
-            res_model="tech.document.revision.wizard"
-            view_id ="doc_revision_wizard"
-            id="action_doc_revision_wizard"
-            multi="True"
-            key2="client_action_multi"
-            target="new"
+        <!--<act_window name="Document Revision"-->
+            <!--src_model="tech.submittal.document.revision"-->
+            <!--res_model="tech.document.revision.wizard"-->
+            <!--view_id ="doc_revision_wizard"-->
+            <!--id="action_doc_revision_wizard"-->
+            <!--multi="True"-->
+            <!--key2="client_action_multi"-->
+            <!--target="new"-->
 
-         />
+         <!--/>-->
 
          <record id="tech_bbs_weight_wizard_view" model="ir.ui.view">
             <field name="name">BBS Weight</field>
