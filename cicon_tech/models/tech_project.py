@@ -38,8 +38,13 @@ class CiconCustJobSite(models.Model):
                                           "- S: Project Sites\n"
                                           "- C: Cage Division\n"
                                      )
-
     _sql_constraints = [('unique_site_ref', 'UNIQUE(site_ref_no)', 'Unique Site Reference')]
+
+    @api.onchange('site_ref_no')
+    def onchange_site_ref(self):
+        if self.site_category and self.site_ref_no:
+            if self.site_category != self.site_ref_no[0]:
+                return {'warning': {'message': 'Site Reference not match with category ! Please verify !', 'title': 'Site Reference' }}
 
 
 class ResCompany(models.Model):
