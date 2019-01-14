@@ -111,17 +111,20 @@
                         <group>
                             <field name="partner_id" options="{'no_create':True,'no_open': True}" />
                             <field name="name"  placeholder="Project Name" />
-                            <field name="po_box" />
+                        </group>
+                        <group col="4">
                             <field name="telephone" />
                             <field name="fax" />
+                            <field name="po_box" />
                         </group>
                         <group>
                             <field name="consultant_id" />
                             <field name="client_id" />
                         </group>
                         <group col="4" >
-                            <field name="site_ref_no" required="True"/>
-                            <field name="last_site_ref"/>
+                            <field name="site_category" attrs="{'readonly': [('submittal_count','>', 0)]}"/>
+                            <field name="last_site_ref" attrs="{'invisible': [('submittal_count','>', 0)]}" />
+                            <field name="site_ref_no" required="True" attrs="{'readonly': [('submittal_count','>', 0)]}"/>
                             <field name="last_submittal_date"/>
                             <field name="coordinator_id" />
                         </group>

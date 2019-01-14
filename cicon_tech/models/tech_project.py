@@ -4,11 +4,12 @@ from odoo import models, fields, api
 class CiconCustJobSite(models.Model):
     _inherit = 'cicon.job.site'
 
-    @api.model
+    @api.one
+    @api.depends('site_category')
     def _get_last_site_ref(self):
         """ Compute last created site Ref on field on Creation Form 'last_site_ref' """
-        _job_site_id = self.env['cicon.job.site'].search([('site_ref_no','!=',False)], order='id desc', limit=1)
-        return _job_site_id.site_ref_no
+        _job_site_id = self.env['cicon.job.site'].search([('site_ref_no','!=',False), ('site_category', '=', self.site_category)], order='id desc', limit=1)
+        self.last_site_ref =  _job_site_id.site_ref_no
 
     @api.multi
     def _get_submittal_count(self):
@@ -28,10 +29,15 @@ class CiconCustJobSite(models.Model):
     coordinator_id = fields.Many2one('res.users', 'Co-ordinated By', help="Site Coordinator",
                                      domain="[('login','!=','admin')]")
     site_contact_ids = fields.One2many('tech.project.contact', 'job_site_id', "Job Site Contacts")
-    last_site_ref = fields.Char(default=_get_last_site_ref, string='Previous Site Reference',
+    last_site_ref = fields.Char(compute=_get_last_site_ref, string='Previous Site Reference',
                                 readonly=True, store=False, help="Last created Site Reference")
     submittal_count = fields.Integer(compute=_get_submittal_count, string="Submittal Count")
     last_submittal_date = fields.Date(compute=_get_submittal_count, string='Last Submitted',readonly=True)
+    site_category = fields.Selection([('S', 'S'), ('C', 'C')], string='Category', default='S', required=True,
+                                     help="Site Category:\n"
+                                          "- S: Project Sites\n"
+                                          "- C: Cage Division\n"
+                                     )
 
     _sql_constraints = [('unique_site_ref', 'UNIQUE(site_ref_no)', 'Unique Site Reference')]
 
